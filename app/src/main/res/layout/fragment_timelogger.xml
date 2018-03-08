@@ -2,6 +2,5 @@
     android:id="@+id/timeLogger"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:dividerHeight="0dp"
-    android:background="#111"/>
+    android:dividerHeight="0dp"/>
 
