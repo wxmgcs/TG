@@ -14,18 +14,9 @@
   limitations under the License.
   -->
 
-<resources>
-    <string name="app_name">TG</string>
-    <string-array name="planets_array">
-        <item>我的</item>
-        <item>时间日志</item>
-        <item>标签库</item>
-        <item>设置</item>
-        <item>关于</item>
-    </string-array>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-    <string name="action_websearch">Web search</string>
-    <string name="app_not_available">Sorry, there\'s no web browser available</string>
-    <string name="time_logger">时间日志</string>
-</resources>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:id="@+id/action_websearch"-->
+          <!--android:icon="@drawable/action_search"-->
+          <!--android:title="@string/action_websearch"-->
+          <!--android:showAsAction="ifRoom|withText" />-->
+</menu>
