@@ -26,8 +26,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v7.app.AppCompatActivity;
 
+import cn.diyai.tg.view.FlagLibFragment;
 import cn.diyai.tg.view.MyFragment;
 import cn.diyai.tg.view.PlanetFragment;
+import cn.diyai.tg.view.SettingFragment;
 import cn.diyai.tg.view.TimeLoggerFragment;
 
 
@@ -144,6 +146,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 1:
                 fragment = new TimeLoggerFragment();
+                break;
+
+            case 2:
+                fragment = new FlagLibFragment();
+                break;
+            case 3:
+                fragment = new SettingFragment();
                 break;
             default:
                 fragment = new PlanetFragment();

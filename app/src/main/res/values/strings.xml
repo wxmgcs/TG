@@ -27,5 +27,17 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="action_websearch">Web search</string>
     <string name="app_not_available">Sorry, there\'s no web browser available</string>
+
+
+    <string name="mini">我的</string>
+
     <string name="time_logger">时间日志</string>
+
+
+    <string name="flag_lib">标签库</string>
+
+    <string name="setting">设置</string>
+    <string name="setting_sleeptime">"设置您的休息时间"</string>
+    <string name="setting_time_particle">时间颗粒度</string>
+
 </resources>

@@ -48,11 +48,10 @@ public class TimeLoggerAdapter extends BaseAdapter{
         //获得学生对象
         TimeLogger timerLogger = mData.get(position);
         //获得自定义布局中每一个控件的对象。
-        TextView timeStart = (TextView) viewTimeLogger.findViewById(R.id.timelogger_start);
-        TextView timeEnd = (TextView) viewTimeLogger.findViewById(R.id.timelogger_end);
-        Button timeEdit = (Button) viewTimeLogger.findViewById(R.id.timelogger_edit);
-        timeStart.setText(timerLogger.getStart());
-        timeEnd.setText(timerLogger.getEnd());
+        TextView area = (TextView) viewTimeLogger.findViewById(R.id.timelogger_area);
+        TextView timeEdit = (TextView) viewTimeLogger.findViewById(R.id.timelogger_edit);
+        area.setText(timerLogger.getStart()+"~"+timerLogger.getEnd());
+        timeEdit.setText("上班");
         return viewTimeLogger ;
     }
 }

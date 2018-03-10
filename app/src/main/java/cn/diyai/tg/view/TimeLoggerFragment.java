@@ -39,15 +39,6 @@ public class TimeLoggerFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_timelogger, container, false);
         ListView lv =  rootView.findViewById(R.id.timeLogger);
 
-
-//        String[] strs = new String[] {
-//                "first", "second", "third", "fourth", "fifth"
-//        };
-//        ArrayAdapter listAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1,
-//                strs);
-//
-//        lv.setAdapter(listAdapter);
-
         LayoutInflater inflater2 =getActivity().getLayoutInflater();
         int flag = 15; //每隔15分钟一个间隔
         //初始化数据

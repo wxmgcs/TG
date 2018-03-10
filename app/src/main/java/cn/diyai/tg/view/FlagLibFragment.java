@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.Locale;
 
 import cn.diyai.tg.R;
 
@@ -18,18 +15,14 @@ import cn.diyai.tg.R;
  * Created by wangxiaomin on 2018/3/9.
  */
 
-public class MyFragment extends Fragment {
-    public MyFragment() {
+public class FlagLibFragment extends Fragment {
+    public FlagLibFragment() {
         // Empty constructor required for fragment subclasses
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_mini, container, false);
-        TextView textView = rootView.findViewById(R.id.mini);
-
-        textView.setText(R.string.mini);
-        getActivity().setTitle(R.string.mini);
+        View rootView = inflater.inflate(R.layout.fragment_flaglib, container, false);
         return rootView;
     }
 }
