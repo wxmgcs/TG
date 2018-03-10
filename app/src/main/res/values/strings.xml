@@ -20,7 +20,9 @@
         <item>我的</item>
         <item>时间日志</item>
         <item>标签库</item>
+        <item>统计</item>
         <item>设置</item>
+        <item>反馈与建议</item>
         <item>关于</item>
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
@@ -36,8 +38,16 @@
 
     <string name="flag_lib">标签库</string>
 
+
+    <string name="statistics_timelogger">统计</string>
+
     <string name="setting">设置</string>
     <string name="setting_sleeptime">"设置您的休息时间"</string>
     <string name="setting_time_particle">时间颗粒度</string>
+
+    <string name="feedback_suggest">反馈与建议</string>
+
+    <string name="about">关于</string>
+    <string name="about_info">记录每天的时间,\n通过统计报表,\n帮助了解并优化时间管理.</string>
 
 </resources>

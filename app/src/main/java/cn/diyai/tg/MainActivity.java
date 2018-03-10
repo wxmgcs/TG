@@ -26,10 +26,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v7.app.AppCompatActivity;
 
+import cn.diyai.tg.view.AboutFragment;
+import cn.diyai.tg.view.FeedbackFragment;
 import cn.diyai.tg.view.FlagLibFragment;
 import cn.diyai.tg.view.MyFragment;
 import cn.diyai.tg.view.PlanetFragment;
 import cn.diyai.tg.view.SettingFragment;
+import cn.diyai.tg.view.StatisticsFragment;
 import cn.diyai.tg.view.TimeLoggerFragment;
 
 
@@ -142,17 +145,38 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         switch (position){
             case 0:
+                //我的
                 fragment = new MyFragment();
                 break;
+
             case 1:
+                //时间日志
                 fragment = new TimeLoggerFragment();
                 break;
 
             case 2:
+                //标签库
                 fragment = new FlagLibFragment();
                 break;
+
             case 3:
+                //统计
+                fragment = new StatisticsFragment();
+                break;
+
+            case 4:
+                //设置
                 fragment = new SettingFragment();
+                break;
+
+            case 5:
+                //反馈与建议
+                fragment = new FeedbackFragment();
+                break;
+
+            case 6:
+                //关于
+                fragment = new AboutFragment();
                 break;
             default:
                 fragment = new PlanetFragment();
