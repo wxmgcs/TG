@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- API 14 theme customizations can go here. -->
+        <item name="android:actionOverflowButtonStyle">@style/suishouActionOverflowButtonStyle</item>
+    </style>
+
+    <style name="suishouActionOverflowButtonStyle">
+        <item name="android:src">@drawable/action_search</item>
+    </style>
+
 </resources>

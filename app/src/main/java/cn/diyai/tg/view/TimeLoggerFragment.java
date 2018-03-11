@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.Contacts;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -19,7 +21,9 @@ import java.util.Locale;
 
 import cn.diyai.tg.R;
 import cn.diyai.tg.adapter.TimeLoggerAdapter;
+import cn.diyai.tg.model.Setting;
 import cn.diyai.tg.model.TimeLogger;
+import cn.diyai.tg.presenter.DBPresenter;
 
 
 /**
@@ -28,11 +32,16 @@ import cn.diyai.tg.model.TimeLogger;
  */
 
 public class TimeLoggerFragment extends Fragment {
+
+    Setting setting;
+
     public TimeLoggerFragment() {
         // Empty constructor required for fragment subclasses
     }
 
     List<TimeLogger> mData;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,15 +49,16 @@ public class TimeLoggerFragment extends Fragment {
         ListView lv =  rootView.findViewById(R.id.timeLogger);
 
         LayoutInflater inflater2 =getActivity().getLayoutInflater();
-        int flag = 15; //每隔15分钟一个间隔
+
+        setting = new DBPresenter(getActivity()).getSetting();
+
+        int flag = setting.getTimeParticle(); //每隔15分钟一个间隔
         //初始化数据
         initData(flag);
         //创建自定义Adapter的对象
-        TimeLoggerAdapter adapter = new TimeLoggerAdapter(inflater2,mData);
+        TimeLoggerAdapter adapter = new TimeLoggerAdapter(getActivity(),inflater2,mData);
         //将布局添加到ListView中
         lv.setAdapter(adapter);
-
-
 
         getActivity().setTitle(R.string.time_logger);
         return rootView;
@@ -70,5 +80,10 @@ public class TimeLoggerFragment extends Fragment {
             timeLogger  = new TimeLogger(start,end);
             mData.add(timeLogger);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
     }
 }

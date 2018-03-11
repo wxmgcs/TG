@@ -15,8 +15,13 @@
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_websearch"
+    <item android:id="@+id/action_addflag"
           android:icon="@drawable/action_search"
-          android:title="@string/action_websearch"
+          android:title="@string/add_flaglib"
           android:showAsAction="ifRoom|withText" />
+
+    <!--<item android:id="@+id/action_delflag"-->
+        <!--android:icon="@drawable/action_search"-->
+        <!--android:title="@string/del_flaglib"-->
+        <!--android:showAsAction="ifRoom|withText" />-->
 </menu>

@@ -26,6 +26,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.support.v7.app.AppCompatActivity;
 
+import cn.diyai.tg.contract.IActivityLifeCycle;
+import cn.diyai.tg.contract.UserInfoContract;
+import cn.diyai.tg.model.UserInfoModel;
+import cn.diyai.tg.presenter.UserInfoActivityPresenter;
 import cn.diyai.tg.view.AboutFragment;
 import cn.diyai.tg.view.FeedbackFragment;
 import cn.diyai.tg.view.FlagLibFragment;
@@ -36,7 +40,12 @@ import cn.diyai.tg.view.StatisticsFragment;
 import cn.diyai.tg.view.TimeLoggerFragment;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements UserInfoContract.IUserInfoActivity{
+    // Activity逻辑层接口
+    private UserInfoContract.IUserInfoActivityPresenter mIActivityPresenter;
+    // 生命周期接口
+    private IActivityLifeCycle mIActivityLifeCycle;
+
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -90,6 +99,13 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             selectItem(0);
         }
+
+        // 初始化逻辑
+        new UserInfoActivityPresenter(this);
+        mIActivityPresenter.start();
+
+        // View映射onCreate生命周期到Presenter
+        mIActivityLifeCycle.onCreate();
     }
 
     @Override
@@ -132,6 +148,10 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 //        }
     }
+
+
+
+
 
     /* The click listner for ListView in the navigation drawer */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -223,5 +243,69 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+    @Override
+    public void setPresenter(UserInfoContract.IUserInfoActivityPresenter mIActivityPresenter) {
+        this.mIActivityPresenter = mIActivityPresenter;
+    }
 
+    @Override
+    public void setILifeCycle(IActivityLifeCycle mIActivityLifeCycle) {
+        this.mIActivityLifeCycle = mIActivityLifeCycle;
+    }
+
+    @Override
+    public void showLoading() {
+        Toast.makeText(this, "正在加载", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void dismissLoading() {
+        Toast.makeText(this, "加载完成", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showUserInfo(UserInfoModel userInfoModel) {
+
+    }
+
+    @Override
+    public String loadUserId() {
+        return null;
+    }
+
+    @Override
+    protected void onRestart() {
+        mIActivityLifeCycle.onRestart();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart() {
+        mIActivityLifeCycle.onStart();
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        mIActivityLifeCycle.onResume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        mIActivityLifeCycle.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        mIActivityLifeCycle.onStop();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mIActivityLifeCycle.onDestroy();
+        super.onDestroy();
+    }
 }

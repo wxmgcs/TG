@@ -37,17 +37,27 @@
 
 
     <string name="flag_lib">标签库</string>
-
+    <string name="add_flaglib">添加</string>
+    <string name="del_flaglib">删除</string>
+    <string name="alertdialog_flaglib_name">标签名</string>
+    <string name="enter_flaglib_name">输入标签名</string>
+    <string name="flaglib_is_exists">标签已存在</string>
 
     <string name="statistics_timelogger">统计</string>
+
 
     <string name="setting">设置</string>
     <string name="setting_sleeptime">"设置您的休息时间"</string>
     <string name="setting_time_particle">时间颗粒度</string>
+    <string name="please_choose">请选择</string>
+    <string name="choose_time_particle">请选择时间颗粒度</string>
 
     <string name="feedback_suggest">反馈与建议</string>
 
     <string name="about">关于</string>
     <string name="about_info">记录每天的时间,\n通过统计报表,\n帮助了解并优化时间管理.</string>
+
+    <string name="btn_sure">确定</string>
+    <string name="btn_cancel">取消</string>
 
 </resources>

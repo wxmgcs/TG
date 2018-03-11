@@ -7,10 +7,19 @@ package cn.diyai.tg.model;
 public class TimeLogger {
     private String start;
     private String end;
+    private int id;
 
     public TimeLogger(String start, String end) {
         this.start = start;
         this.end = end;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getStart() {
@@ -34,6 +43,7 @@ public class TimeLogger {
         return "TimeLogger{" +
                 "start='" + start + '\'' +
                 ", end='" + end + '\'' +
+                ", id=" + id +
                 '}';
     }
 }
