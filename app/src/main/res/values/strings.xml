@@ -47,7 +47,7 @@
 
 
     <string name="setting">设置</string>
-    <string name="setting_sleeptime">"设置您的休息时间"</string>
+    <string name="setting_sleeptime">"设置就寝时间"</string>
     <string name="setting_time_particle">时间颗粒度</string>
     <string name="please_choose">请选择</string>
     <string name="choose_time_particle">请选择时间颗粒度(分钟)</string>
