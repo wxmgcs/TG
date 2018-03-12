@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.HashMap;
 
 import cn.diyai.tg.R;
 import cn.diyai.tg.model.Constants;
-import cn.diyai.tg.presenter.DBPresenter;
+import cn.diyai.tg.presenter.FlagLibPresenter;
 
 /**
  * Created by wangxiaomin on 2018/3/11.
@@ -26,17 +25,21 @@ public class CheckboxAdapter extends BaseAdapter {
     ArrayList<HashMap<String, Object>> listData;
     //记录checkbox的状态
     HashMap<Integer, Boolean> state = new HashMap<Integer, Boolean>();
+    FlagLibPresenter flagLibPresenter;
 
     //构造函数
     public CheckboxAdapter(Context context,ArrayList<HashMap<String,Object>> listData) {
         this.context = context;
         this.listData = listData;
+        flagLibPresenter = new FlagLibPresenter(context);
     }
 
     @Override
     public int getCount() {
-// TODO Auto-generated method stub
-        return listData.size();
+        if(listData != null){
+            return listData.size();
+        }
+        return 0;
     }
 
     @Override
@@ -65,7 +68,7 @@ public class CheckboxAdapter extends BaseAdapter {
             map.put("flaglib_name", text);
             map.put("selected", false);
             listData.add(map);// 添加数据
-            new DBPresenter(context).addFlag(text);
+            flagLibPresenter.addFlag(text);
         }
         notifyDataSetChanged();
         return true;
@@ -111,7 +114,7 @@ public class CheckboxAdapter extends BaseAdapter {
                     state.remove(position);
                 }
 
-                new DBPresenter(context).updateFlagStatus(listData.get(position).get("id")+"",isChecked);
+                flagLibPresenter.updateFlagStatus(listData.get(position).get("id")+"",isChecked);
             }
         });
 //        check.setChecked((state.get(position) == null ? false : true));

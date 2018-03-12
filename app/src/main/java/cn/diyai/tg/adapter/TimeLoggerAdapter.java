@@ -8,11 +8,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +18,7 @@ import cn.diyai.tg.R;
 import cn.diyai.tg.model.Constants;
 import cn.diyai.tg.model.FlagLib;
 import cn.diyai.tg.model.TimeLogger;
-import cn.diyai.tg.presenter.DBPresenter;
+import cn.diyai.tg.presenter.FlagLibPresenter;
 
 /**
  *
@@ -33,18 +30,23 @@ public class TimeLoggerAdapter extends BaseAdapter{
     private LayoutInflater mInflater;
     private Context mContext;
     private List<FlagLib> flagLibs = null;
+    FlagLibPresenter flagLibPresenter;
 
     public TimeLoggerAdapter(Context context, LayoutInflater inflater, List<TimeLogger> data){
         mContext = context;
         mInflater = inflater;
         mData = data;
-        flagLibs = new DBPresenter(mContext).getUsedFlagLibs();
+        flagLibPresenter = new FlagLibPresenter(context);
+        flagLibs = flagLibPresenter.getUsedFlagLibs();
         Log.i(Constants.TAG,"使用标签数:"+flagLibs.size()+"");
     }
 
     @Override
     public int getCount() {
-        return mData.size();
+        if(mData !=null){
+            return mData.size();
+        }
+        return 0;
     }
 
     @Override
@@ -97,7 +99,7 @@ public class TimeLoggerAdapter extends BaseAdapter{
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-        flagLibs = new DBPresenter(mContext).getUsedFlagLibs();
+//        flagLibs = flagLibPresenter.getUsedFlagLibs();
 
     }
 }

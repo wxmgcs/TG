@@ -5,13 +5,11 @@ import android.test.AndroidTestCase;
 import android.test.ServiceTestCase;
 import android.util.Log;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.reflect.Method;
 
 import cn.diyai.tg.model.Constants;
-import cn.diyai.tg.presenter.DBPresenter;
 
 /**
  * Created by wangxiaomin on 2018/3/11.

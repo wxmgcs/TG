@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,9 +23,8 @@ import java.util.List;
 
 import cn.diyai.tg.R;
 import cn.diyai.tg.adapter.CheckboxAdapter;
-import cn.diyai.tg.model.Constants;
 import cn.diyai.tg.model.FlagLib;
-import cn.diyai.tg.presenter.DBPresenter;
+import cn.diyai.tg.presenter.FlagLibPresenter;
 
 
 /**
@@ -39,7 +37,7 @@ public class FlagLibFragment extends Fragment {
     private List<CheckBox> checkBoxs = new ArrayList<CheckBox>();
     CheckboxAdapter listItemAdapter;
 
-    DBPresenter dbPresenter = null;
+    FlagLibPresenter flagLibPresenter = null;
     public FlagLibFragment() {
     }
 
@@ -48,7 +46,7 @@ public class FlagLibFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        dbPresenter = new DBPresenter(getActivity());
+        flagLibPresenter = new FlagLibPresenter(getActivity());
         View rootView = inflater.inflate(R.layout.fragment_flaglib, container, false);
 
         LinearLayout linearLayout  = (LinearLayout)rootView.findViewById(R.id.flaglib_linerlayout);
@@ -124,7 +122,11 @@ public class FlagLibFragment extends Fragment {
 
     public ArrayList<HashMap<String, Object>> initData(){
 
-        List<FlagLib> flagLibs = dbPresenter.getFlagLibs();
+        List<FlagLib> flagLibs = flagLibPresenter.getFlagLibs();
+        if(flagLibs == null){
+            return null;
+        }
+
 
         ArrayList<HashMap<String, Object>> listData=new ArrayList<HashMap<String,Object>>();
         for(int i=0;i<flagLibs.size();i++){

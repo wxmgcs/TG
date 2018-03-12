@@ -1,29 +1,22 @@
 package cn.diyai.tg.view;
 
 import android.app.Fragment;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.Contacts;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import cn.diyai.tg.R;
 import cn.diyai.tg.adapter.TimeLoggerAdapter;
 import cn.diyai.tg.model.Setting;
 import cn.diyai.tg.model.TimeLogger;
-import cn.diyai.tg.presenter.DBPresenter;
+import cn.diyai.tg.presenter.SettingPresenter;
 
 
 /**
@@ -36,7 +29,6 @@ public class TimeLoggerFragment extends Fragment {
     Setting setting;
 
     public TimeLoggerFragment() {
-        // Empty constructor required for fragment subclasses
     }
 
     List<TimeLogger> mData;
@@ -50,9 +42,10 @@ public class TimeLoggerFragment extends Fragment {
 
         LayoutInflater inflater2 =getActivity().getLayoutInflater();
 
-        setting = new DBPresenter(getActivity()).getSetting();
-
+        setting = new SettingPresenter(getActivity()).getSetting();
+//
         int flag = setting.getTimeParticle(); //每隔15分钟一个间隔
+//        int flag = 15;
         //初始化数据
         initData(flag);
         //创建自定义Adapter的对象
@@ -68,6 +61,10 @@ public class TimeLoggerFragment extends Fragment {
     初始化数据
      */
     private void initData(int flag) {
+        if(flag <= 0){
+            return ;
+        }
+
         mData = new ArrayList<TimeLogger>();
         int count = 24*60/flag;
         TimeLogger timeLogger = null;
