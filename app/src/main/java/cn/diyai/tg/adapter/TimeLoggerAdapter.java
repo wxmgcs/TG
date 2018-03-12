@@ -39,6 +39,9 @@ public class TimeLoggerAdapter extends BaseAdapter{
         flagLibPresenter = new FlagLibPresenter(context);
         flagLibs = flagLibPresenter.getUsedFlagLibs();
         Log.i(Constants.TAG,"使用标签数:"+flagLibs.size()+"");
+        for(FlagLib flagLib:flagLibs){
+            Log.i(Constants.TAG,flagLib.toString());
+        }
     }
 
     @Override
@@ -63,7 +66,7 @@ public class TimeLoggerAdapter extends BaseAdapter{
     public View getView(int position, View view, ViewGroup viewGroup) {
 
         List<String> flagLibList=new ArrayList<String>();
-        for(int i = 1 ; i < flagLibs.size();i++){
+        for(int i = 0 ; i < flagLibs.size();i++){
             flagLibList.add(flagLibs.get(i).getName());
         }
 
@@ -90,7 +93,7 @@ public class TimeLoggerAdapter extends BaseAdapter{
 
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(mContext,android.R.layout.simple_list_item_1,flagLibList);
         timeEdit.setAdapter(adapter);
-        timeEdit.setSelection(flagLibs.size()-2,true);
+        timeEdit.setSelection(flagLibs.size()-1,true);
 
 
         return viewTimeLogger ;
