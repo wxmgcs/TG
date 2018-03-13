@@ -9,16 +9,16 @@ public class TimeLogger {
     private String end;
     private int id;
     private String date;
-    private String flag;
+    private int flag;
 
     public TimeLogger() {
     }
 
-    public String getFlag() {
+    public int getFlag() {
         return flag;
     }
 
-    public void setFlag(String flag) {
+    public void setFlag(int flag) {
         this.flag = flag;
     }
 

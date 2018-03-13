@@ -7,9 +7,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -28,8 +31,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import cn.diyai.tg.contract.IActivityLifeCycle;
 import cn.diyai.tg.contract.UserInfoContract;
+import cn.diyai.tg.model.TimeLogger;
 import cn.diyai.tg.model.UserInfoModel;
 import cn.diyai.tg.presenter.UserInfoActivityPresenter;
+import cn.diyai.tg.service.TimeLoggerService;
 import cn.diyai.tg.view.AboutFragment;
 import cn.diyai.tg.view.FeedbackFragment;
 import cn.diyai.tg.view.FlagLibFragment;
@@ -40,7 +45,7 @@ import cn.diyai.tg.view.StatisticsFragment;
 import cn.diyai.tg.view.TimeLoggerFragment;
 
 
-public class MainActivity extends AppCompatActivity implements UserInfoContract.IUserInfoActivity{
+public class MainActivity extends AppCompatActivity implements UserInfoContract.IUserInfoActivity {
     // Activity逻辑层接口
     private UserInfoContract.IUserInfoActivityPresenter mIActivityPresenter;
     // 生命周期接口
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements UserInfoContract.
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] mPlanetTitles;
+
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +113,9 @@ public class MainActivity extends AppCompatActivity implements UserInfoContract.
 
         // View映射onCreate生命周期到Presenter
         mIActivityLifeCycle.onCreate();
+
+//        intent = new Intent(this, TimeLoggerService.class);
+//        startService(intent);// 启动服务
     }
 
     @Override
@@ -145,12 +155,9 @@ public class MainActivity extends AppCompatActivity implements UserInfoContract.
 //                }
 //                return true;
 //            default:
-                return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
 //        }
     }
-
-
-
 
 
     /* The click listner for ListView in the navigation drawer */
@@ -163,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements UserInfoContract.
 
     private void selectItem(int position) {
         Fragment fragment = null;
-        switch (position){
+        switch (position) {
             case 0:
                 //我的
                 fragment = new MyFragment();
@@ -307,5 +314,20 @@ public class MainActivity extends AppCompatActivity implements UserInfoContract.
     protected void onDestroy() {
         mIActivityLifeCycle.onDestroy();
         super.onDestroy();
+//        stopService(intent);// 在退出Activity时停止该服务
     }
+
+//    ServiceConnection serviceConnection = new ServiceConnection() {
+//        @Override
+//        public void onServiceConnected(ComponentName name, IBinder service) {
+//            TimeLoggerService.MyBinder binder = (TimeLoggerService.MyBinder) service;
+//            binder.getService();// 获取到的Service即PlayerService
+//        }
+//
+//        @Override
+//        public void onServiceDisconnected(ComponentName name) {
+//        }
+//    };
+
+
 }

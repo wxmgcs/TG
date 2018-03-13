@@ -59,9 +59,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         sql = "create table if not exists " +
                 Constants.TABLE_NAME_TIMELOGGER
-                + " ("+Constants.DB_TIMELOGGER_ID+" integer primary key, "
+                + " ("+Constants.DB_TIMELOGGER_ID+" integer primary key autoincrement, "
                 +Constants.DB_TIMELOGGER_DATE+" text, "
-                +Constants.DB_TIMELOGGER_FLAG+" text, "
+                +Constants.DB_TIMELOGGER_FLAG+" integer, "
                 +Constants.DB_TIMELOGGER_START+" text, "
                 +Constants.DB_TIMELOGGER_END+" text)";
         sqLiteDatabase.execSQL(sql);

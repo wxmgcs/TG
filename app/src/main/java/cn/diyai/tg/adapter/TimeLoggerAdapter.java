@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 import cn.diyai.tg.R;
+import cn.diyai.tg.TGApplication;
 import cn.diyai.tg.model.Constants;
 import cn.diyai.tg.model.FlagLib;
 import cn.diyai.tg.model.Setting;
@@ -25,10 +26,9 @@ import cn.diyai.tg.presenter.SettingPresenter;
 import cn.diyai.tg.presenter.TimeLoggerPresenter;
 
 /**
- *
  * Created by wangxiaomin on 2018/3/9.
  */
-public class TimeLoggerAdapter extends BaseAdapter{
+public class TimeLoggerAdapter extends BaseAdapter implements AdapterView.OnItemSelectedListener {
 
     private List<TimeLogger> mData;
     private LayoutInflater mInflater;
@@ -40,27 +40,33 @@ public class TimeLoggerAdapter extends BaseAdapter{
     Setting setting;
     int flag;
     List<TimeLogger> timeLoggers;
+    TimeLogger curTimerLogger;
 
-    public TimeLoggerAdapter(Context context, LayoutInflater inflater){
+    ViewHolder viewHolder = null;
+
+    public TimeLoggerAdapter(Context context, LayoutInflater inflater) {
         mContext = context;
         mInflater = inflater;
         flagLibPresenter = new FlagLibPresenter(context);
         timeLoggerPresenter = new TimeLoggerPresenter(context);
         settingPresenter = new SettingPresenter(context);
         setting = settingPresenter.getSetting();
-        flag = setting.getTimeParticle(); //每隔15分钟一个间隔
-        timeLoggers = timeLoggerPresenter.init(flag);
-        Log.i(Constants.TAG,"日志个数:"+timeLoggers.size()+"");
+        flag = setting.getTimeParticle();
+        timeLoggers = timeLoggerPresenter.getTimeLoggers();
+        if (timeLoggers == null) {
+            timeLoggers = timeLoggerPresenter.init(flag);
+        }
+        Log.i(Constants.TAG, "日志个数:" + timeLoggers.size() + "");
         flagLibs = flagLibPresenter.getUsedFlagLibs();
-        Log.i(Constants.TAG,"使用标签数:"+flagLibs.size()+"");
-        for(FlagLib flagLib:flagLibs){
-            Log.i(Constants.TAG,flagLib.toString());
+        Log.i(Constants.TAG, "使用标签数:" + flagLibs.size() + "");
+        for (FlagLib flagLib : flagLibs) {
+            Log.i(Constants.TAG, flagLib.toString());
         }
     }
 
     @Override
     public int getCount() {
-        if(timeLoggers !=null){
+        if (timeLoggers != null) {
             return timeLoggers.size();
         }
         return 0;
@@ -68,7 +74,7 @@ public class TimeLoggerAdapter extends BaseAdapter{
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return timeLoggers.get(position);
     }
 
     @Override
@@ -77,45 +83,29 @@ public class TimeLoggerAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
+    public View getView(final int position, View view, ViewGroup viewGroup) {
 
-        List<String> flagLibList=new ArrayList<String>();
-        for(int i = 0 ; i < flagLibs.size();i++){
+        viewHolder = new ViewHolder();
+        List<String> flagLibList = new ArrayList<String>();
+        for (int i = 0; i < flagLibs.size(); i++) {
             flagLibList.add(flagLibs.get(i).getName());
         }
 
-        //获得ListView中的view
-        View viewTimeLogger = mInflater.inflate(R.layout.item_timelogger,null);
 
-        //获得学生对象
-//        TimeLogger timerLogger = mData.get(position);
-        final TimeLogger timerLogger = timeLoggers.get(position);
-        //获得自定义布局中每一个控件的对象。
-        TextView area = (TextView) viewTimeLogger.findViewById(R.id.timelogger_area);
-        Spinner timeEdit = (Spinner) viewTimeLogger.findViewById(R.id.timelogger_edit);
-        area.setText(timerLogger.getStart()+"~"+timerLogger.getEnd());
-
-        timeEdit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int pos, long id) {
-
-                //更新数据库
-                timerLogger.setFlag(flagLibs.get(pos).getName());
-                timeLoggerPresenter.updateTimeLogger(timerLogger);
-
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-        ArrayAdapter<String> adapter =new ArrayAdapter<String>(mContext,android.R.layout.simple_list_item_1,flagLibList);
-        timeEdit.setAdapter(adapter);
-        timeEdit.setSelection(flagLibs.size()-1,true);
+        view = mInflater.inflate(R.layout.item_timelogger, null);
+//            Log.i(Constants.TAG,"get view position:"+position+":"+timeLoggers.get(position).toString());
+        curTimerLogger = timeLoggers.get(position);
+        viewHolder.area = (TextView) view.findViewById(R.id.timelogger_area);
+        viewHolder.spinner = (Spinner) view.findViewById(R.id.timelogger_edit);
+        viewHolder.area.setText(curTimerLogger.getStart() + "~" + curTimerLogger.getEnd());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, flagLibList);
+        viewHolder.spinner.setAdapter(adapter);
+        viewHolder.spinner.setSelection(curTimerLogger.getFlag(), true);
 
 
-        return viewTimeLogger ;
+        viewHolder.spinner.setOnItemSelectedListener(this);
+
+        return view;
     }
 
     @Override
@@ -123,4 +113,25 @@ public class TimeLoggerAdapter extends BaseAdapter{
         super.notifyDataSetChanged();
 
     }
+
+    private class ViewHolder {
+        private Spinner spinner;
+        private TextView area;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+
+        //更新数据库
+        Log.i(Constants.TAG, "current position:" + pos + ":" + id + ":");
+        curTimerLogger.setFlag(flagLibs.get(pos).getId());
+        timeLoggerPresenter.updateTimeLogger(curTimerLogger);
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+
 }

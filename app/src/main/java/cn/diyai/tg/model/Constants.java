@@ -16,7 +16,7 @@ public class Constants {
     public static final String DB_TIMELOGGER_ID = "Id";
     public static final String DB_TIMELOGGER_FLAG = "flag";
 
-    public static int DB_VERSION = 4;
+    public static int DB_VERSION = 11;
     public static String DB_NAME = "TG.db";
     public static String TABLE_NAME_FLAGLIB = "FlagLib";
     public static  String TABLE_NAME_SETTING = "Setting";
