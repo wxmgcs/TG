@@ -8,11 +8,28 @@ public class TimeLogger {
     private String start;
     private String end;
     private int id;
+    private String date;
+    private String flag;
 
-    public TimeLogger(String start, String end) {
-        this.start = start;
-        this.end = end;
+    public TimeLogger() {
     }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
 
     public int getId() {
         return id;
@@ -44,6 +61,8 @@ public class TimeLogger {
                 "start='" + start + '\'' +
                 ", end='" + end + '\'' +
                 ", id=" + id +
+                ", date='" + date + '\'' +
+                ", flag='" + flag + '\'' +
                 '}';
     }
 }

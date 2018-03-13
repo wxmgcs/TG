@@ -56,10 +56,16 @@ public class DBHelper extends SQLiteOpenHelper {
         tableName =Constants.TABLE_NAME_SETTING;
         sqLiteDatabase.execSQL(String.format("insert into " + tableName + " (%s, %s) values ('10:30~6:30', 15)", Constants.DB_SETTING_SLEEPTIME,Constants.DB_SETTING_TIMEPARTICLE));
 
-//        db.setTransactionSuccessful();
-//        db.endTransaction();
-//        SettingPresenter settingPresenter  = new SettingPresenter(mContext);
-//        settingPresenter.initSettingData();
+
+        sql = "create table if not exists " +
+                Constants.TABLE_NAME_TIMELOGGER
+                + " ("+Constants.DB_TIMELOGGER_ID+" integer primary key, "
+                +Constants.DB_TIMELOGGER_DATE+" text, "
+                +Constants.DB_TIMELOGGER_FLAG+" text, "
+                +Constants.DB_TIMELOGGER_START+" text, "
+                +Constants.DB_TIMELOGGER_END+" text)";
+        sqLiteDatabase.execSQL(sql);
+
     }
 
     @Override
@@ -70,7 +76,23 @@ public class DBHelper extends SQLiteOpenHelper {
         sql = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME_SETTING;
         sqLiteDatabase.execSQL(sql);
 
+        sql = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME_TIMELOGGER;
+        sqLiteDatabase.execSQL(sql);
+
         onCreate(sqLiteDatabase);
+    }
+
+
+    @Override
+    public void onDowngrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        String sql = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME_FLAGLIB;
+        sqLiteDatabase.execSQL(sql);
+
+        sql = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME_SETTING;
+        sqLiteDatabase.execSQL(sql);
+
+        sql = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME_TIMELOGGER;
+        sqLiteDatabase.execSQL(sql);
     }
 
 }

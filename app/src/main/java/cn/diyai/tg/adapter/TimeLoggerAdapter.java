@@ -13,12 +13,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import cn.diyai.tg.R;
 import cn.diyai.tg.model.Constants;
 import cn.diyai.tg.model.FlagLib;
+import cn.diyai.tg.model.Setting;
 import cn.diyai.tg.model.TimeLogger;
 import cn.diyai.tg.presenter.FlagLibPresenter;
+import cn.diyai.tg.presenter.SettingPresenter;
+import cn.diyai.tg.presenter.TimeLoggerPresenter;
 
 /**
  *
@@ -31,12 +35,22 @@ public class TimeLoggerAdapter extends BaseAdapter{
     private Context mContext;
     private List<FlagLib> flagLibs = null;
     FlagLibPresenter flagLibPresenter;
+    TimeLoggerPresenter timeLoggerPresenter;
+    SettingPresenter settingPresenter;
+    Setting setting;
+    int flag;
+    List<TimeLogger> timeLoggers;
 
-    public TimeLoggerAdapter(Context context, LayoutInflater inflater, List<TimeLogger> data){
+    public TimeLoggerAdapter(Context context, LayoutInflater inflater){
         mContext = context;
         mInflater = inflater;
-        mData = data;
         flagLibPresenter = new FlagLibPresenter(context);
+        timeLoggerPresenter = new TimeLoggerPresenter(context);
+        settingPresenter = new SettingPresenter(context);
+        setting = settingPresenter.getSetting();
+        flag = setting.getTimeParticle(); //每隔15分钟一个间隔
+        timeLoggers = timeLoggerPresenter.init(flag);
+        Log.i(Constants.TAG,"日志个数:"+timeLoggers.size()+"");
         flagLibs = flagLibPresenter.getUsedFlagLibs();
         Log.i(Constants.TAG,"使用标签数:"+flagLibs.size()+"");
         for(FlagLib flagLib:flagLibs){
@@ -46,8 +60,8 @@ public class TimeLoggerAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        if(mData !=null){
-            return mData.size();
+        if(timeLoggers !=null){
+            return timeLoggers.size();
         }
         return 0;
     }
@@ -72,8 +86,10 @@ public class TimeLoggerAdapter extends BaseAdapter{
 
         //获得ListView中的view
         View viewTimeLogger = mInflater.inflate(R.layout.item_timelogger,null);
+
         //获得学生对象
-        TimeLogger timerLogger = mData.get(position);
+//        TimeLogger timerLogger = mData.get(position);
+        final TimeLogger timerLogger = timeLoggers.get(position);
         //获得自定义布局中每一个控件的对象。
         TextView area = (TextView) viewTimeLogger.findViewById(R.id.timelogger_area);
         Spinner timeEdit = (Spinner) viewTimeLogger.findViewById(R.id.timelogger_edit);
@@ -85,6 +101,9 @@ public class TimeLoggerAdapter extends BaseAdapter{
                                        int pos, long id) {
 
                 //更新数据库
+                timerLogger.setFlag(flagLibs.get(pos).getName());
+                timeLoggerPresenter.updateTimeLogger(timerLogger);
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -102,7 +121,6 @@ public class TimeLoggerAdapter extends BaseAdapter{
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-//        flagLibs = flagLibPresenter.getUsedFlagLibs();
 
     }
 }

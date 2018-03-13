@@ -42,14 +42,14 @@ public class TimeLoggerFragment extends Fragment {
 
         LayoutInflater inflater2 =getActivity().getLayoutInflater();
 
-        setting = new SettingPresenter(getActivity()).getSetting();
-//
-        int flag = setting.getTimeParticle(); //每隔15分钟一个间隔
+//        setting = new SettingPresenter(getActivity()).getSetting();
+////
+//        int flag = setting.getTimeParticle(); //每隔15分钟一个间隔
 //        int flag = 15;
         //初始化数据
-        initData(flag);
+//        initData(flag);
         //创建自定义Adapter的对象
-        TimeLoggerAdapter adapter = new TimeLoggerAdapter(getActivity(),inflater2,mData);
+        TimeLoggerAdapter adapter = new TimeLoggerAdapter(getActivity(),inflater2);
         //将布局添加到ListView中
         lv.setAdapter(adapter);
 
@@ -74,7 +74,10 @@ public class TimeLoggerFragment extends Fragment {
         for(int i =0; i <count;i++ ){
             start = String.format("%02d:%02d",i*flag/60,i*flag%60);
             end = String.format("%02d:%02d",(i+1)*flag/60,(i+1)*flag%60);
-            timeLogger  = new TimeLogger(start,end);
+
+            timeLogger  = new TimeLogger();
+            timeLogger.setStart(start);
+            timeLogger.setEnd(end);
             mData.add(timeLogger);
         }
     }

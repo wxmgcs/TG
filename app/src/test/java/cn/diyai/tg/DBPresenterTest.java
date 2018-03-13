@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.lang.reflect.Method;
 
 import cn.diyai.tg.model.Constants;
+import cn.diyai.tg.presenter.FlagLibPresenter;
 
 /**
  * Created by wangxiaomin on 2018/3/11.
@@ -30,6 +31,6 @@ public class DBPresenterTest extends AndroidTestCase {
 
     @Test
     public void testGetUsedFlagLibs() throws Exception {
-        Log.i(Constants.TAG,new DBPresenter(getTestContext()).getUsedFlagLibs().size()+"");
+        Log.i(Constants.TAG,new FlagLibPresenter(getTestContext()).getUsedFlagLibs().size()+"");
     }
 }
