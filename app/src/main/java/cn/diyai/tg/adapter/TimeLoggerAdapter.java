@@ -12,7 +12,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import cn.diyai.tg.R;
@@ -28,7 +30,7 @@ import cn.diyai.tg.presenter.TimeLoggerPresenter;
 /**
  * Created by wangxiaomin on 2018/3/9.
  */
-public class TimeLoggerAdapter extends BaseAdapter implements AdapterView.OnItemSelectedListener {
+public class TimeLoggerAdapter extends BaseAdapter {
 
     private List<TimeLogger> mData;
     private LayoutInflater mInflater;
@@ -42,7 +44,6 @@ public class TimeLoggerAdapter extends BaseAdapter implements AdapterView.OnItem
     List<TimeLogger> timeLoggers;
     TimeLogger curTimerLogger;
 
-    ViewHolder viewHolder = null;
 
     public TimeLoggerAdapter(Context context, LayoutInflater inflater) {
         mContext = context;
@@ -62,7 +63,9 @@ public class TimeLoggerAdapter extends BaseAdapter implements AdapterView.OnItem
         for (FlagLib flagLib : flagLibs) {
             Log.i(Constants.TAG, flagLib.toString());
         }
+
     }
+
 
     @Override
     public int getCount() {
@@ -84,28 +87,59 @@ public class TimeLoggerAdapter extends BaseAdapter implements AdapterView.OnItem
 
     @Override
     public View getView(final int position, View view, ViewGroup viewGroup) {
+        ViewHolder viewHolder = null;
 
-        viewHolder = new ViewHolder();
-        List<String> flagLibList = new ArrayList<String>();
-        for (int i = 0; i < flagLibs.size(); i++) {
-            flagLibList.add(flagLibs.get(i).getName());
+        if(view == null){
+            viewHolder = new ViewHolder();
+            List<String> flagLibList = new ArrayList<String>();
+            for (int i = 0; i < flagLibs.size(); i++) {
+                flagLibList.add(flagLibs.get(i).getName());
+            }
+
+
+            view = mInflater.inflate(R.layout.item_timelogger, null);
+            Log.i(Constants.TAG,"get view position:"+position+":"+timeLoggers.get(position).toString());
+            curTimerLogger = timeLoggers.get(position);
+            viewHolder.area = (TextView) view.findViewById(R.id.timelogger_area);
+            viewHolder.spinner = (Spinner) view.findViewById(R.id.timelogger_edit);
+            viewHolder.area.setText(curTimerLogger.getStart() + "~" + curTimerLogger.getEnd());
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, flagLibList);
+            viewHolder.spinner.setAdapter(adapter);
+            viewHolder.spinner.setSelection(curTimerLogger.getFlag(), true);
+
+
+            viewHolder.spinner.setOnItemSelectedListener(new ItemClickSelectListener(viewHolder.spinner));
+//            view.setOnClickListener(this);
+            view.setTag(viewHolder);
+        }else{
+            viewHolder = (ViewHolder) view.getTag();
         }
 
-
-        view = mInflater.inflate(R.layout.item_timelogger, null);
-//            Log.i(Constants.TAG,"get view position:"+position+":"+timeLoggers.get(position).toString());
-        curTimerLogger = timeLoggers.get(position);
-        viewHolder.area = (TextView) view.findViewById(R.id.timelogger_area);
-        viewHolder.spinner = (Spinner) view.findViewById(R.id.timelogger_edit);
-        viewHolder.area.setText(curTimerLogger.getStart() + "~" + curTimerLogger.getEnd());
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, flagLibList);
-        viewHolder.spinner.setAdapter(adapter);
-        viewHolder.spinner.setSelection(curTimerLogger.getFlag(), true);
-
-
-        viewHolder.spinner.setOnItemSelectedListener(this);
-
         return view;
+    }
+
+    private class ItemClickSelectListener implements AdapterView.OnItemSelectedListener {
+        Spinner checkinfo_item_value ;
+
+        public ItemClickSelectListener(Spinner checkinfo_item_value) {
+            this.checkinfo_item_value = checkinfo_item_value;
+        }
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view,
+                                   int position, long id) {
+//            allValues.put(checkinfo_item_value.getPrompt().toString(), position);
+            //更新数据库
+            Log.i(Constants.TAG, "current position:" + position + ":" + id + ":");
+            curTimerLogger.setFlag(flagLibs.get(position).getId());
+            timeLoggerPresenter.updateTimeLogger(curTimerLogger);
+            Log.i(Constants.TAG,parent.getItemAtPosition(position)+"");
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+
+        }
     }
 
     @Override
@@ -114,24 +148,10 @@ public class TimeLoggerAdapter extends BaseAdapter implements AdapterView.OnItem
 
     }
 
+
     private class ViewHolder {
         private Spinner spinner;
         private TextView area;
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-
-        //更新数据库
-        Log.i(Constants.TAG, "current position:" + pos + ":" + id + ":");
-        curTimerLogger.setFlag(flagLibs.get(pos).getId());
-        timeLoggerPresenter.updateTimeLogger(curTimerLogger);
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
     }
 
 }

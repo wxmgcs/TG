@@ -45,7 +45,7 @@ public class DBHelper extends SQLiteOpenHelper {
         String tableName = Constants.TABLE_NAME_FLAGLIB;
         sqLiteDatabase.execSQL("insert into " + tableName + " (Id, name, selected) values (1, '上班', 1)");
         sqLiteDatabase.execSQL("insert into " + tableName + " (Id, name, selected)  values (2, '阅读', 1)");
-        sqLiteDatabase.execSQL("insert into " + tableName + " (Id, name, selected)  values (3, '写代码', 0)");
+        sqLiteDatabase.execSQL("insert into " + tableName + " (Id, name, selected)  values (3, '写代码', 1)");
         sqLiteDatabase.execSQL("insert into " + tableName + " (Id, name, selected)  values (4, '健身', 1)");
         sqLiteDatabase.execSQL("insert into " + tableName + " (Id, name, selected)  values (5, '交通', 1)");
 
@@ -83,16 +83,18 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    @Override
-    public void onDowngrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        String sql = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME_FLAGLIB;
-        sqLiteDatabase.execSQL(sql);
-
-        sql = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME_SETTING;
-        sqLiteDatabase.execSQL(sql);
-
-        sql = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME_TIMELOGGER;
-        sqLiteDatabase.execSQL(sql);
-    }
+//    @Override
+//    public void onDowngrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+//        String sql = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME_FLAGLIB;
+//        sqLiteDatabase.execSQL(sql);
+//
+//        sql = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME_SETTING;
+//        sqLiteDatabase.execSQL(sql);
+//
+//        sql = "DROP TABLE IF EXISTS " + Constants.TABLE_NAME_TIMELOGGER;
+//        sqLiteDatabase.execSQL(sql);
+//
+//        onCreate(sqLiteDatabase);
+//    }
 
 }

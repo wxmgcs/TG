@@ -42,7 +42,7 @@ public class TimeLoggerPresenter {
             end = String.format("%02d:%02d",(i+1)*flag/60,(i+1)*flag%60);
 
             timeLogger  = new TimeLogger();
-            timeLogger.setId(Integer.parseInt(today)+i+1);
+            timeLogger.setId(Integer.parseInt(today)*1000+i+1);
             timeLogger.setStart(start);
             timeLogger.setEnd(end);
             timeLogger.setDate(today);
