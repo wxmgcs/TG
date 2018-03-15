@@ -96,7 +96,6 @@ public class TimeLoggerAdapter extends BaseAdapter {
                 flagLibList.add(flagLibs.get(i).getName());
             }
 
-
             view = mInflater.inflate(R.layout.item_timelogger, null);
             Log.i(Constants.TAG,"get view position:"+position+":"+timeLoggers.get(position).toString());
             curTimerLogger = timeLoggers.get(position);
@@ -128,8 +127,6 @@ public class TimeLoggerAdapter extends BaseAdapter {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view,
                                    int position, long id) {
-//            allValues.put(checkinfo_item_value.getPrompt().toString(), position);
-            //更新数据库
             Log.i(Constants.TAG, "current position:" + position + ":" + id + ":");
             curTimerLogger.setFlag(flagLibs.get(position).getId());
             timeLoggerPresenter.updateTimeLogger(curTimerLogger);
@@ -145,9 +142,7 @@ public class TimeLoggerAdapter extends BaseAdapter {
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-
     }
-
 
     private class ViewHolder {
         private Spinner spinner;
